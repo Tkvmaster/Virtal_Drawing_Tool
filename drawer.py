@@ -6,8 +6,7 @@ import numpy as np
 
 brushThickness = 10
 eraserThickness = 60
-xp = 0
-yp = 0
+xp,yp = 0,0
 imgCanvas = np.zeros((720, 1280, 3), np.uint8)
 
 overlayList = []
@@ -68,16 +67,15 @@ while True:
 
 
     # phase 5: if drawing mode: index finger is up!
-        if fingers[1] and fingers[2] == False:
-            cv2.circle(img, (x1, y1), 15, drawColor, cv2.FILLED)
+        if fingers[1] and not fingers[2]:
+
             if xp == 0 and yp == 0:
                 xp, yp = x1, y1
             if drawColor == (0, 0, 0):
-
-                cv2.line(img, (xp, yp), (x1, y1), drawColor, eraserThickness)
+                cv2.circle(img, (x1, y1), 15, (255,255,255), cv2.FILLED)
                 cv2.line(imgCanvas, (xp, yp), (x1, y1), drawColor, eraserThickness)
             else:
-                cv2.line(img, (xp, yp), (x1, y1), drawColor, brushThickness)
+                cv2.circle(img, (x1, y1), 15, drawColor, cv2.FILLED)
                 cv2.line(imgCanvas, (xp, yp), (x1, y1), drawColor, brushThickness)
             xp, yp = x1, y1
 
